@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind and daisy UI and app.css link -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="./app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- font awesome -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="">
+    <!-- form section start -->
+    <article class="max-width-7xl mx-auto hidden" id="loginForm">
+      <div class="hero bg-base-200 min-h-screen">
+        <div class="hero-content flex-col">
+          <div class="text-center">
+            <div class="text-center mx-auto">
+              <img src="./assets/github-logo.png" alt="" class="mx-auto" />
+            </div>
+            <h3 class="text-2xl font-bold pt-4">GitHub Issues Trackers</h3>
+            <p class="py-3 w-100">Sign in to manage your issues</p>
+          </div>
+          <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+            <div class="card-body">
+              <fieldset class="fieldset">
+                <label class="label">Username</label>
+                <input
+                  id="nameInput"
+                  type="text"
+                  class="input"
+                  placeholder="Enter Your your username"
+                  value="admin"
+                />
+                <label class="label text-purple-500">Default: admin</label>
+
+                <label class="label">Password</label>
+                <input
+                  id="passInput"
+                  type="password"
+                  class="input"
+                  value="admin123"
+                  placeholder="Password"
+                />
+
+                <label class="label text-purple-500">Default: admin123</label>
+
+                <button id="login" class="btn btn-primary mt-4">Login</button>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <!-- form section end -->
+
+    <!-- Main container start -->
+
+    <!-- header start -->
+    <header class="max-w-[1350px] mx-auto">
+      <div class="navbar bg-base-100 shadow-sm">
+        <div class="flex-1">
+          <div class="flex gap-3 items-center">
+            <img src="./assets/github-logo.png" class="w-15" alt="" />
+            <h6 class="font-bold text-xl">GitHub Issues Tracer</h6>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search Issues ... "
+            class="input input-bordered w-24 md:w-auto"
+          />
+
+          <button id="search" class="rounded-md btn btn-primary font-bold">
+            Search
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- header end -->
+
+    <main
+      id="mainContainer"
+      class="max-w-7xl mx-auto flex flex-col justify-between"
+    >
+      <!-- toogle tab  navbar start-->
+      <nav
+        class="flex gap-5 justify-start items-center py-7 bg-gray-100 rounded-md px-10 my-4"
+      >
+        <button
+          onclick="toggleTabs('all')"
+          id="tab-all"
+          class="btn btn-primary"
+        >
+          All
+        </button>
+
+        <button onclick="toggleTabs('open')" id="tab-open" class="btn">
+          Open
+        </button>
+
+        <button onclick="toggleTabs('closed')" id="tab-closed" class="btn">
+          Closed
+        </button>
+      </nav>
+
+      <!-- tab navbar end -->
+
+      <!-- issue bar start -->
+
+      <section
+        class="flex justify-between wrapper border-2 rounded-xl p-2 border-gray-300 px-5 py-3"
+      >
+        <div class="left flex gap-3 items-center">
+          <span class="">
+            <img src="./assets/Aperture.png" alt="" />
+          </span>
+
+          <span>
+            <h4><span id="dynamicIssue">50</span> Issues</h4>
+            <p>Track and manage your project issues</p>
+          </span>
+        </div>
+
+        <div class="right flex gap-3">
+          <div class="flex items-center gap-2 text-xl font-semibold">
+            <span class="h-4 w-4 rounded-full bg-green-500"></span>Open
+          </div>
+          <div class="flex items-center gap-2 text-xl font-semibold">
+            <span class="h-4 w-4 rounded-full bg-purple-500"></span>Closed
+          </div>
+        </div>
+      </section>
+
+      <!-- issue bar end -->
+
+      <!-- main issue cards start -->
+
+      <article
+        id="issueContainer"
+        class="grid grid-cols-1 md:grid-cols-3 gap-7 items-center justify-center hidden"
+      >
+        <!-- Issue Card -->
+      </article>
+
+      <!-- Open container -->
+      <article
+        id="openContainer"
+        class="grid grid-cols-1 md:grid-cols-3 gap-7 items-center justify-center hidden"
+      ></article>
+
+      <!-- Close container -->
+
+      <article
+        id="closedContainer"
+        class="grid grid-cols-1 md:grid-cols-3 gap-7 items-center justify-center hidden"
+      ></article>
+
+      <!-- main issue cards end -->
+    </main>
+
+    <!-- Main container end -->
+
+    <script src="./script.js"></script>
+  </body>
+</html>
