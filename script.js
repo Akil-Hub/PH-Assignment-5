@@ -60,6 +60,7 @@ const toggleTabs = (tab) => {
     issueContainer.classList.remove("hidden");
     dynamicIssue.innerText = 50;
     notFound.classList.add("hidden");
+    loadIssues()
   } else if (tab === "open") {
     openContainer.classList.remove("hidden");
     dynamicIssue.innerText = 44;
