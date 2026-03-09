@@ -47,6 +47,8 @@ const toggleTabs = (tab) => {
       tabName.classList.add(...tabInactive);
     }
   }
+  // initial remove not found page
+  notFound.classList.add("hidden");
 
   const pages = [issueContainer, openContainer, closedContainer];
 
@@ -54,7 +56,6 @@ const toggleTabs = (tab) => {
     page.classList.add("hidden");
   }
 
-  //   emptyJobs.classList.add("hidden");
 
   if (tab === "all") {
     issueContainer.classList.remove("hidden");
@@ -91,15 +92,56 @@ const loadIssues = async (params) => {
 // formated date
 const formatDate = (d) => new Date(d).toLocaleDateString();
 
+// load single issue
+const loadIssueDetails = async (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const issue = data.data;
+
+  showModal(issue);
+};
+
+
+
 // show modal 
-function showModal(title, description, author, status) {
-  document.getElementById("modalTitle").innerText = title;
-  document.getElementById("modalDescription").innerText = description;
-  document.getElementById("modalAuthor").innerText = "Author: " + author;
-  document.getElementById("modalStatus").innerText = "Status: " + status;
+function showModal(issue) {
+
+  document.getElementById("modalTitle").innerText = issue.title;
+  document.getElementById("modalDescription").innerText = issue.description;
+
+  document.getElementById("modalAuthor").innerText = issue.author;
+  document.getElementById("modalDate").innerText = formatDate(issue.createdAt);
+
+  document.getElementById("modalAssignee").innerText =
+    issue.assignee || "Unassigned";
+
+  // Status
+  const statusEl = document.getElementById("modalStatus");
+  statusEl.innerText = issue.status;
+
+  statusEl.className =
+    "px-3 py-1 rounded-full text-white font-semibold " +
+    (issue.status === "open" ? "bg-green-500" : "bg-purple-500");
+
+  // Priority
+  const priorityEl = document.getElementById("modalPriority");
+  priorityEl.innerText = issue.priority;
+
+  priorityEl.className =
+    "px-3 py-1 rounded-full text-white font-semibold " +
+    (issue.priority === "high"
+      ? "bg-red-500"
+      : issue.priority === "medium"
+      ? "bg-yellow-500"
+      : "bg-green-500");
 
   document.getElementById("issueModal").showModal();
 }
+
+
 
 // display all issues
 
@@ -181,8 +223,9 @@ const displayIssues = (issues) => {
 `;
 
 issueCard.addEventListener("click", () => {
-  showModal(title, description, author, status);
+  loadIssueDetails(id);
 });
+
 
 
       issueContainer.append(issueCard);
@@ -273,8 +316,9 @@ const displayOpenIssues = (issues) => {
 
 `;
 issueCard.addEventListener("click", () => {
-  showModal(title, description, author, status);
+  loadIssueDetails(id);
 });
+
       openContainer.append(issueCard);
     },
   );
@@ -360,9 +404,14 @@ function displayClosedIssues(issues) {
 </div>
 
 
-`;    issueCard.addEventListener("click", () => {
-  showModal(title, description, author, status);
+`;  
+issueCard.addEventListener("click", () => {
+  loadIssueDetails(id);
 });
+
+
+
+
       closedContainer.append(issueCard);
     },
   );
@@ -390,11 +439,13 @@ searchBtn.addEventListener("click", () => {
       const allIssue = data.data;
 
       const filteredIssues = allIssue.filter((issue) => {
-        issue.title.trim().toLowerCase().includes(searchValue);
-
+        
         if (searchValue !== issue.title.trim().toLowerCase()) {
-          notFound.classList.remove("hidden");
+          notFound.classList.add("hidden");
+          
         }
+        return   issue.title.trim().toLowerCase().includes(searchValue);
+
       });
 
       issueContainer.innerHTML = " ";
@@ -405,3 +456,4 @@ searchBtn.addEventListener("click", () => {
       displayIssues(filteredIssues);
     });
 });
+        
