@@ -77,13 +77,27 @@ const toggleTabs = (tab) => {
   
   }
 };
+
+// show and hide spinner
+const loader = document.getElementById("loader");
+
+function showLoader() {
+  loader.classList.remove("hidden");
+}
+
+function hideLoader() {
+  loader.classList.add("hidden");
+}
+
 // Load the issues from api
 
 const loadIssues = async (params) => {
+  showLoader()
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
   const res = await fetch(url);
   const data = await res.json();
+  hideLoader()
   displayIssues(data.data);
   displayOpenIssues(data.data);
   displayClosedIssues(data.data);
@@ -419,17 +433,7 @@ issueCard.addEventListener("click", () => {
 
 // search functionality is here
 searchBtn.addEventListener("click", () => {
-  // const searchIssue = async (searchText) => {
-  //     const url = ` https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}
-  // `
-  //     const res = await fetch(url)
-  //     const data = await res.json()
-  //     const allIssue = data.data
-  //     let searchValue = searchInput.value.toLowerCase().trim()
-  // const filteredIssues = allIssue.filter((issue)=>issue.title.includes(searchValue))
-  //     displaySearchIssue(filteredIssues)
-  // };
-  // searchIssue("notifications")
+showLoader()
 
   const searchValue = searchInput.value.toLowerCase().trim();
 
@@ -446,7 +450,8 @@ searchBtn.addEventListener("click", () => {
         }
         return   issue.title.trim().toLowerCase().includes(searchValue);
 
-      });
+      }
+    );
 
       issueContainer.innerHTML = " ";
       openContainer.classList.add("hidden");
@@ -455,5 +460,9 @@ searchBtn.addEventListener("click", () => {
 
       displayIssues(filteredIssues);
     });
+
+    hideLoader()
 });
+
+
         
