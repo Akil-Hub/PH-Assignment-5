@@ -120,21 +120,21 @@ function showModal(issue) {
   document.getElementById("modalDate").innerText = formatDate(issue.createdAt);
 
   document.getElementById("modalAssignee").innerText =
-    issue.assignee || "Unassigned";
+    issue.assignee || 'Not Assigned'
 
   // Status
-  const statusEl = document.getElementById("modalStatus");
-  statusEl.innerText = issue.status;
+  const status1 = document.getElementById("modalStatus");
+  status1.innerText = issue.status;
 
-  statusEl.className =
+  status1.className =
     "px-3 py-1 rounded-full text-white font-semibold " +
     (issue.status === "open" ? "bg-green-500" : "bg-purple-500");
 
   // Priority
-  const priorityEl = document.getElementById("modalPriority");
-  priorityEl.innerText = issue.priority;
+  const priorityl = document.getElementById("modalPriority");
+  priorityl.innerText = issue.priority;
 
-  priorityEl.className =
+  priorityl.className =
     "px-3 py-1 rounded-full text-white font-semibold " +
     (issue.priority === "high"
       ? "bg-red-500"
