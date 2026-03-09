@@ -174,9 +174,32 @@
       <!-- searched issue -->
       <article
         id="notFound"
-        class="grid grid-cols-1 md:grid-cols-3 gap-7 items-center justify-center hidden"
-      ><h4>Issue Not found</h4>
+        class="flex justify-center items-center  "
+      ><h4 class="text-6xl font-semibold mt-20 text-red-500">Issue Not found</h4>
     </article>
+
+   </section>
+
+   <!-- modal -->
+
+   <section id="modal">
+ <dialog id="issueModal" class="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle" class="font-bold text-lg"></h3>
+    <p id="modalDescription" class="py-4"></p>
+
+    <div class="text-sm text-gray-500">
+      <p id="modalAuthor"></p>
+      <p id="modalStatus"></p>
+    </div>
+
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 
    </section>
 

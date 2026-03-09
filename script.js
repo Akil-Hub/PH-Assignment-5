@@ -59,25 +59,22 @@ const toggleTabs = (tab) => {
   if (tab === "all") {
     issueContainer.classList.remove("hidden");
     dynamicIssue.innerText = 50;
+    notFound.classList.add("hidden")
 
-    // if (allContainer.children.length < 1) {
-    //   emptyJobs.classList.remove("hidden");
-    // }
+   
   } else if (tab === "open") {
     openContainer.classList.remove("hidden");
     dynamicIssue.innerText = 44;
+    notFound.classList.add("hidden")
 
-    // if (interviewContainer.children.length < 1) {
-    //   emptyJobs.classList.remove("hidden");
-    // }
+   
   } else if (tab === "closed") {
     closedContainer.classList.remove("hidden");
     dynamicIssue.innerText = 6;
-    // if (rejectedContainer.children.length < 1) {
-    //   emptyJobs.classList.remove("hidden");
-    // }
+    notFound.classList.add("hidden")
+
+  
   }
-  //   updateStatus();
 };
 // Load the issues from api
 
@@ -93,6 +90,16 @@ const loadIssues = async (params) => {
 
 // formated date
 const formatDate = (d) => new Date(d).toLocaleDateString();
+
+// show modal 
+function showModal(title, description, author, status) {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalDescription").innerText = description;
+  document.getElementById("modalAuthor").innerText = "Author: " + author;
+  document.getElementById("modalStatus").innerText = "Status: " + status;
+
+  document.getElementById("issueModal").showModal();
+}
 
 // display all issues
 
@@ -113,10 +120,10 @@ const displayIssues = (issues) => {
       const issueCard = document.createElement("div");
       issueCard.innerHTML = `
 
-<div class="max-w-xl mx-auto mt-6">
+<div class="max-w-xl mx-auto mt-6" >
 
   <!-- Card -->
-  <div class="bg-base-100 shadow-md rounded-xl border border-gray-200 border-t-7 ${status === "open" ? "border-t-green-500" : "border-t-purple-500"} p-5">
+  <div class="bg-base-100 shadow-md rounded-xl border border-gray-200 border-t-7 ${status === "open" ? "border-t-green-500" : "border-t-purple-500"} p-5" >
 
     <!-- Header -->
     <div class="flex justify-between items-center mb-3">
@@ -131,7 +138,7 @@ const displayIssues = (issues) => {
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl font-bold mb-2">
+    <h2  class="text-xl font-bold mb-2">
       ${title}
     </h2>
 
@@ -172,6 +179,11 @@ const displayIssues = (issues) => {
   </div>
 </div>
 `;
+
+issueCard.addEventListener("click", () => {
+  showModal(title, description, author, status);
+});
+
 
       issueContainer.append(issueCard);
     },
@@ -260,7 +272,9 @@ const displayOpenIssues = (issues) => {
 
 
 `;
-
+issueCard.addEventListener("click", () => {
+  showModal(title, description, author, status);
+});
       openContainer.append(issueCard);
     },
   );
@@ -346,7 +360,9 @@ function displayClosedIssues(issues) {
 </div>
 
 
-`;
+`;    issueCard.addEventListener("click", () => {
+  showModal(title, description, author, status);
+});
       closedContainer.append(issueCard);
     },
   );
