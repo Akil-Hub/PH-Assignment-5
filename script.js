@@ -197,13 +197,13 @@ const displayIssues = (issues) => {
     <div class="flex gap-3 mb-4">
 
       <!-- Bug Button -->
-      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold">
+      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold uppercase">
         <i class="fa-solid fa-bug mr-1"></i>
         ${labels[0] ? labels[0] : "No Bug"}
       </button>
 
       <!-- Help Needed Button -->
-      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border">
+      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border uppercase">
         <i class="fa-solid fa-globe mr-1  border-amber-600"></i>
         ${labels[1] ? labels[1] : "Help Wanted"}
       </button>
@@ -287,13 +287,14 @@ const displayOpenIssues = (issues) => {
     <div class="flex gap-3 mb-4">
 
       <!-- Bug Button -->
-      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold">
+      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold uppercase
+      ">
         <i class="fa-solid fa-bug mr-1"></i>
         ${labels[0] ? labels[0] : "No Bug"}
       </button>
 
       <!-- Help Needed Button -->
-      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border">
+      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border uppercase">
         <i class="fa-solid fa-globe mr-1  border-amber-600"></i>
         ${labels[1] ? labels[1] : "Help Wanted"}
       </button>
@@ -377,13 +378,13 @@ function displayClosedIssues(issues) {
     <div class="flex gap-3 mb-4">
 
       <!-- Bug Button -->
-      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold">
+      <button class="btn btn-soft btn-error btn-sm text-btn-error rounded-full font-semibold uppercase">
         <i class="fa-solid fa-bug mr-1"></i>
         ${labels[0] ? labels[0] : "No Bug"}
       </button>
 
       <!-- Help Needed Button -->
-      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border">
+      <button class="btn btn-soft btn-warning btn-sm text-btn-warning font-bold rounded-full border uppercase">
         <i class="fa-solid fa-globe mr-1  border-amber-600"></i>
         ${labels[1] ? labels[1] : "Help Wanted"}
       </button>
