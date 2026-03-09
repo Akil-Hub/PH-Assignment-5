@@ -13,6 +13,8 @@ const closedContainer = document.getElementById("closedContainer");
 const dynamicIssue = document.getElementById("dynamicIssue");
 const searchBtn = document.getElementById("search");
 const searchInput = document.getElementById("searchInput");
+const allIssuesContainer = document.getElementById("allIssuesContainer");
+const searchedContainer = document.getElementById("searchedContainer");
 
 // login page functionality
 
@@ -169,8 +171,6 @@ const displayIssues = (issues) => {
 
   </div>
 </div>
-
-
 `;
 
       issueContainer.append(issueCard);
@@ -265,7 +265,6 @@ const displayOpenIssues = (issues) => {
     },
   );
 };
-
 
 // display closed issues
 function displayClosedIssues(issues) {
@@ -367,25 +366,22 @@ searchBtn.addEventListener("click", () => {
   // };
   // searchIssue("notifications")
 
-   const searchValue = searchInput.value.toLowerCase().trim()
+  const searchValue = searchInput.value.toLowerCase().trim();
 
-   fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues ').then((res )=>res.json()).then((data)=>{
-    const allIssue = data.data
-         
-    
-  const filteredIssues = allIssue.filter((issue)=>issue.title.trim().toLowerCase().includes(searchValue))
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
+    .then((res) => res.json())
+    .then((data) => {
+      const allIssue = data.data;
 
-  displayIssues(filteredIssues)
+      const filteredIssues = allIssue.filter((issue) =>
+        issue.title.trim().toLowerCase().includes(searchValue),
+      );
 
+      issueContainer.innerHTML = " ";
+    openContainer.classList.add("hidden");
+    closedContainer.classList.add("hidden");
+    issueContainer.classList.remove("hidden");
 
-   })
-
-
-
+      displayIssues(filteredIssues);
+    });
 });
-
-// display searched issues
-
-const displaySearchIssue = (filteredIssue) => {
-  console.log(filteredIssue);
-};
