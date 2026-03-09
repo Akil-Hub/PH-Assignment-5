@@ -14,7 +14,7 @@ const dynamicIssue = document.getElementById("dynamicIssue");
 const searchBtn = document.getElementById("search");
 const searchInput = document.getElementById("searchInput");
 const allIssuesContainer = document.getElementById("allIssuesContainer");
-const searchedContainer = document.getElementById("searchedContainer");
+const notFound = document.getElementById("notFound");
 
 // login page functionality
 
@@ -373,14 +373,18 @@ searchBtn.addEventListener("click", () => {
     .then((data) => {
       const allIssue = data.data;
 
-      const filteredIssues = allIssue.filter((issue) =>
-        issue.title.trim().toLowerCase().includes(searchValue),
-      );
+      const filteredIssues = allIssue.filter((issue) => {
+        issue.title.trim().toLowerCase().includes(searchValue);
+
+        if (searchValue !== issue.title.trim().toLowerCase()) {
+          notFound.classList.remove("hidden");
+        }
+      });
 
       issueContainer.innerHTML = " ";
-    openContainer.classList.add("hidden");
-    closedContainer.classList.add("hidden");
-    issueContainer.classList.remove("hidden");
+      openContainer.classList.add("hidden");
+      closedContainer.classList.add("hidden");
+      issueContainer.classList.remove("hidden");
 
       displayIssues(filteredIssues);
     });
