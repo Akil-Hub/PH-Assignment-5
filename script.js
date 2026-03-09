@@ -56,25 +56,18 @@ const toggleTabs = (tab) => {
     page.classList.add("hidden");
   }
 
-
   if (tab === "all") {
     issueContainer.classList.remove("hidden");
     dynamicIssue.innerText = 50;
-    notFound.classList.add("hidden")
-
-   
+    notFound.classList.add("hidden");
   } else if (tab === "open") {
     openContainer.classList.remove("hidden");
     dynamicIssue.innerText = 44;
-    notFound.classList.add("hidden")
-
-   
+    notFound.classList.add("hidden");
   } else if (tab === "closed") {
     closedContainer.classList.remove("hidden");
     dynamicIssue.innerText = 6;
-    notFound.classList.add("hidden")
-
-  
+    notFound.classList.add("hidden");
   }
 };
 
@@ -92,12 +85,12 @@ function hideLoader() {
 // Load the issues from api
 
 const loadIssues = async (params) => {
-  showLoader()
+  showLoader();
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
   const res = await fetch(url);
   const data = await res.json();
-  hideLoader()
+  hideLoader();
   displayIssues(data.data);
   displayOpenIssues(data.data);
   displayClosedIssues(data.data);
@@ -118,11 +111,8 @@ const loadIssueDetails = async (id) => {
   showModal(issue);
 };
 
-
-
-// show modal 
+// show modal
 function showModal(issue) {
-
   document.getElementById("modalTitle").innerText = issue.title;
   document.getElementById("modalDescription").innerText = issue.description;
 
@@ -149,13 +139,11 @@ function showModal(issue) {
     (issue.priority === "high"
       ? "bg-red-500"
       : issue.priority === "medium"
-      ? "bg-yellow-500"
-      : "bg-green-500");
+        ? "bg-yellow-500"
+        : "bg-green-500");
 
   document.getElementById("issueModal").showModal();
 }
-
-
 
 // display all issues
 
@@ -176,7 +164,7 @@ const displayIssues = (issues) => {
       const issueCard = document.createElement("div");
       issueCard.innerHTML = `
 
-<div class="max-w-xl mx-auto mt-6" >
+<div class=" max-w-xl  mx-auto mt-6" >
 
   <!-- Card -->
   <div class="bg-base-100 shadow-md rounded-xl border border-gray-200 border-t-7 ${status === "open" ? "border-t-green-500" : "border-t-purple-500"} p-5" >
@@ -194,13 +182,13 @@ const displayIssues = (issues) => {
     </div>
 
     <!-- Title -->
-    <h2  class="text-xl font-bold mb-2">
+    <h2  class="text-xl font-bold mb-2 line-clamp-1">
       ${title}
     </h2>
 
     <!-- Description -->
     <div class="grid grid-cols-1 gap-2 text-gray-600 mb-4">
-      <p>
+      <p class=" line-clamp-2">
         ${description}
       </p>
     </div>
@@ -236,11 +224,9 @@ const displayIssues = (issues) => {
 </div>
 `;
 
-issueCard.addEventListener("click", () => {
-  loadIssueDetails(id);
-});
-
-
+      issueCard.addEventListener("click", () => {
+        loadIssueDetails(id);
+      });
 
       issueContainer.append(issueCard);
     },
@@ -286,13 +272,13 @@ const displayOpenIssues = (issues) => {
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl font-bold mb-2">
+    <h2 class="text-xl font-bold mb-2 line-clamp-1">
       ${title}
     </h2>
 
     <!-- Description -->
     <div class="grid grid-cols-1 gap-2 text-gray-600 mb-4">
-      <p>
+      <p class='line-clamp-2'>
         ${description}
       </p>
     </div>
@@ -329,9 +315,9 @@ const displayOpenIssues = (issues) => {
 
 
 `;
-issueCard.addEventListener("click", () => {
-  loadIssueDetails(id);
-});
+      issueCard.addEventListener("click", () => {
+        loadIssueDetails(id);
+      });
 
       openContainer.append(issueCard);
     },
@@ -376,13 +362,13 @@ function displayClosedIssues(issues) {
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl font-bold mb-2">
+    <h2 class="text-xl font-bold mb-2 line-clamp-1">
       ${title}
     </h2>
 
     <!-- Description -->
     <div class="grid grid-cols-1 gap-2 text-gray-600 mb-4">
-      <p>
+      <p  class='line-clamp-2'>
         ${description}
       </p>
     </div>
@@ -418,13 +404,10 @@ function displayClosedIssues(issues) {
 </div>
 
 
-`;  
-issueCard.addEventListener("click", () => {
-  loadIssueDetails(id);
-});
-
-
-
+`;
+      issueCard.addEventListener("click", () => {
+        loadIssueDetails(id);
+      });
 
       closedContainer.append(issueCard);
     },
@@ -432,37 +415,29 @@ issueCard.addEventListener("click", () => {
 }
 
 // search functionality is here
-searchBtn.addEventListener("click", () => {
-showLoader()
+searchBtn.addEventListener("click", async () => {
+  showLoader();
 
   const searchValue = searchInput.value.toLowerCase().trim();
 
-  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
-    .then((res) => res.json())
-    .then((data) => {
-      const allIssue = data.data;
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`;
 
-      const filteredIssues = allIssue.filter((issue) => {
-        
-        if (searchValue !== issue.title.trim().toLowerCase()) {
-          notFound.classList.add("hidden");
-          
-        }
-        return   issue.title.trim().toLowerCase().includes(searchValue);
+  const res = await fetch(url);
+  const data = await res.json();
 
-      }
-    );
+  const issues = data.data;
 
-      issueContainer.innerHTML = " ";
-      openContainer.classList.add("hidden");
-      closedContainer.classList.add("hidden");
-      issueContainer.classList.remove("hidden");
+  issueContainer.innerHTML = "";
+  openContainer.classList.add("hidden");
+  closedContainer.classList.add("hidden");
+  issueContainer.classList.remove("hidden");
 
-      displayIssues(filteredIssues);
-    });
+  hideLoader();
 
-    hideLoader()
+  if (issues.length === 0) {
+    notFound.classList.remove("hidden");
+  } else {
+    notFound.classList.add("hidden");
+    displayIssues(issues);
+  }
 });
-
-
-        
